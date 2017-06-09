@@ -1,8 +1,10 @@
 # Filemon
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/filemon`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is an interface to FreeBSD's [filemon(4)][1] device, which allows for tracing
+of file operations of a process and its children.
 
-TODO: Delete this and the text above, and describe your gem
+It is not a security tool, but intended for auditing processes for determining
+file dependencies.
 
 ## Installation
 
@@ -22,7 +24,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To monitor a forked process, this mirrors the code documented in the FreeBSD man page:
+
+```ruby
+monitor = Filemon::Device.new
+monitor.fd = File.new('file_access.log', 'w')
+
+pid = fork do
+	monitor.pid = $$
+	require 'foo'
+	system "bar" # also gets traced
+end
+
+Process.waitpid(pid)
+monitor.close
+```
+
+But this works too if you want to self-monitor:
+
+```ruby
+monitor = Filemon::Device.new(fd: STDERR, pid: $$)
+# ...
+monitor.close
+```
+
+And if you're root you can montor arbitrary pids.
 
 ## Development
 
@@ -32,8 +58,10 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/filemon.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Freaky/filemon.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+1: https://www.freebsd.org/cgi/man.cgi?query=filemon&sektion=4

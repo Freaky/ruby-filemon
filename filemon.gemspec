@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Thomas Hurst"]
   spec.email         = ["tom@hur.st"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{An interface to FreeBSD's filemon(4) device}
+  spec.description   = %q{Provides a means of monitoring file access}
+  spec.homepage      = "https://github.com/Freaky/ruby-filemon"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
