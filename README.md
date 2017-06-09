@@ -31,9 +31,9 @@ monitor = Filemon::Device.new
 monitor.fd = File.new('file_access.log', 'w')
 
 pid = fork do
-	monitor.pid = $$
-	require 'foo'
-	system "bar" # also gets traced
+  monitor.pid = $$
+  require 'foo'
+  system "bar" # also gets traced
 end
 
 Process.waitpid(pid)
