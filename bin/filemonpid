@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "filemon"
+
+trap(:INT)  { exit 1 }
+trap(:TERM) { exit 1 }
+
+pids = ARGV.map {|pid| Integer(pid) }
+mons = pids.map {|pid| Filemon::Device.new(fd: STDERR, pid: pid) }
+
+while pids.any?
+  pids.delete_if do |pid|
+    begin
+      !Process.kill(0, pid)
+    rescue => e
+      true
+    end
+  end
+  sleep 0.1
+end
+
