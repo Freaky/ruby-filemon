@@ -3,6 +3,9 @@
 require "bundler/setup"
 require "filemon"
 
-fmd = Filemon::Device.new(fd: STDERR, pid: $$)
-
-system *ARGV
+fmd = Filemon::Device.new(fd: STDERR)
+pid = fork do
+  fmd.pid = $$
+  exec *ARGV
+end
+exit Process.waitpid2(pid).last.exitstatus
