@@ -1,6 +1,6 @@
 # Filemon
 
-This is an interface to FreeBSD's [filemon(4)][1] device, which allows for tracing
+This is a Ruby interface to FreeBSD's [filemon(4)][1] device, which allows for tracing
 of file operations of a process and its children.
 
 It is not a security tool, but intended for auditing processes for determining
@@ -48,7 +48,27 @@ monitor = Filemon::Device.new(fd: STDERR, pid: $$)
 monitor.close
 ```
 
-And if you're root you can montor arbitrary pids.
+Or indeed any pid your user has permission to trace.
+
+A simple command-line tool is provided for tracing commands:
+
+    % bin/filemon sleep 1
+    # filemon version 5
+    # Target pid 53942
+    # Start 1497269126.786684
+    V 5
+    E 65204 /bin/sleep
+    R 65204 /etc/libmap.conf
+    R 65204 /usr/local/etc/libmap.d
+    R 65204 /var/run/ld-elf.so.hints
+    R 65204 /lib/libc.so.7
+    X 65204 0 0
+    # Stop 1497269127.857683
+    # Bye bye
+
+And one for monitoring pids:
+
+    % bin/filemonpid PID [PID2 [...]]
 
 ## Development
 
