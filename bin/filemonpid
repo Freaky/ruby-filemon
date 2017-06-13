@@ -10,12 +10,8 @@ pids = ARGV.map {|pid| Integer(pid) }
 mons = pids.map {|pid| Filemon::Device.new(fd: STDERR, pid: pid) }
 
 while pids.any?
-  pids.delete_if do |pid|
-    begin
-      !Process.kill(0, pid)
-    rescue => e
-      true
-    end
+  pids.keep_if do |pid|
+    Process.kill(0, pid) rescue false
   end
   sleep 0.1
 end
