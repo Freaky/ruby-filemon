@@ -15,19 +15,22 @@ module Filemon
       else raise ArgumentError, "fd must be an Integer or IO"
       end
 
-      ptr = [[fd].pack('I')].pack('P').unpack('j!').first
-      @filemon.ioctl(IOCCOM::FILEMON_SET_FD, ptr)
+      @filemon.ioctl(IOCCOM::FILEMON_SET_FD, int_ptr(fd))
     end
 
     def pid=(pid)
       Integer === pid or raise ArgumentError, "pid must be an Integer"
 
-      ptr = [[pid].pack('I')].pack('P').unpack('j!').first
-      @filemon.ioctl(IOCCOM::FILEMON_SET_PID, ptr)
+      @filemon.ioctl(IOCCOM::FILEMON_SET_PID, int_ptr(pid))
     end
 
     def close
       @filemon.close
+    end
+
+    private
+    def int_ptr(int)
+      [[int].pack('I')].pack('P').unpack('j!').first
     end
   end
 
