@@ -6,6 +6,9 @@ of file operations of a process and its children.
 It is not a security tool, but intended for auditing processes for determining
 file dependencies.
 
+One example of real-world practical use is for accelerating FreeBSD world building
+using [meta mode][2].
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -24,6 +27,12 @@ Or install it yourself as:
 
 ## Usage
 
+The `filemon` device works by writing tracing data to a file descriptor.  For the
+time being, this interface only provides a means of configuring that, what you do
+with the result is up to you.
+
+You may need to `kldload filemon` before any of this works.
+
 To monitor a forked process, this mirrors the code documented in the FreeBSD man page:
 
 ```ruby
@@ -32,19 +41,18 @@ monitor.fd = File.new('file_access.log', 'w')
 
 pid = fork do
   monitor.pid = $$
-  require 'foo'
-  system "bar" # also gets traced
+  # Do something here.
 end
 
 Process.waitpid(pid)
 monitor.close
 ```
 
-But this works too if you want to self-monitor:
+But nothing stops you from simply monitoring the current process:
 
 ```ruby
 monitor = Filemon::Device.new(fd: STDERR, pid: $$)
-# ...
+# Do something here.
 monitor.close
 ```
 
@@ -85,3 +93,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Freaky
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 [1]: https://www.freebsd.org/cgi/man.cgi?query=filemon&sektion=4
+[2]: http://freebsd.1045724.x6.nabble.com/CFT-WITH-META-MODE-Working-incremental-build-td6101876.html
