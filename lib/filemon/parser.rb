@@ -12,7 +12,7 @@ module Filemon
       @io.each_line do |line|
         op = case line[0]
         when 'V' # version:                          V 5
-        when 'A' # openat
+        when 'A' # openat                            A 57489 moo
         when 'C' # chdir:                            C 46839 /etc
         when 'D' # unlink:                           D 54423 abc
         when 'E' # exec:                             E 42567 /bin/mv
