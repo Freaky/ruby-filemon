@@ -38,7 +38,7 @@ class FilemonTest < Minitest::Test
     end
 
     assert trace.events.one? do |event|
-      event.type == :write && event.path = '/dev/null'
+      event.type == :write && event.path == '/dev/null'
     end
   end
 end
