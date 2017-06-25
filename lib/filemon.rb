@@ -28,6 +28,10 @@ module Filemon
       @filemon.close
     end
 
+    def closed?
+      @filemon.closed?
+    end
+
     private
     def int_ptr(int)
       [[int].pack('I')].pack('P').unpack('j!').first
