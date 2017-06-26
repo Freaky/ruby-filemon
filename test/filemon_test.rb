@@ -40,6 +40,12 @@ class FilemonTest < Minitest::Test
     assert trace.events.one? do |event|
       event.type == :write && event.path == '/dev/null'
     end
+
+    assert trace.files.include? __FILE__
+    assert trace.files.include? '/dev/null'
+
+    assert trace.read.include? __FILE__
+    assert trace.write.include? '/dev/null'
   end
 end
 
