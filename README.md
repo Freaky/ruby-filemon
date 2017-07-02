@@ -1,13 +1,13 @@
 # Filemon
 
-This is a Ruby interface to FreeBSD's [filemon(4)][1] device, which allows for tracing
+This is a Ruby interface to Free/NetBSD's [filemon(4)][1] device, which allows for tracing
 of file operations of a process and its children.
 
 It is not a security tool, but intended for auditing processes for determining
 file dependencies.
 
-One example of real-world practical use is for accelerating FreeBSD world building
-using [meta mode][2].
+One example of real-world practical use is for accelerating [FreeBSD][2]/[NetBSD][3] world building
+using [bmake's meta mode][4].
 
 ## Installation
 
@@ -94,3 +94,5 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 [1]: https://www.freebsd.org/cgi/man.cgi?query=filemon&sektion=4
 [2]: http://freebsd.1045724.x6.nabble.com/CFT-WITH-META-MODE-Working-incremental-build-td6101876.html
+[3]: http://www.crufty.net/sjg/docs/netbsd-meta-mode.htm
+[4]: http://www.crufty.net/help/sjg/bmake-meta-mode.htm
