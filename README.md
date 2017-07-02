@@ -37,7 +37,7 @@ To monitor a forked process, this mirrors the code documented in the FreeBSD man
 
 ```ruby
 monitor = Filemon::Device.new
-monitor.fd = File.new('file_access.log', 'w')
+monitor.fd = File.new('filemon.out', 'w')
 
 pid = fork do
   monitor.pid = $$
